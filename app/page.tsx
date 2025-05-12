@@ -1,6 +1,5 @@
-import Link from 'next/link';
-import { SubdomainForm } from './subdomain-form';
-import { rootDomain } from '@/lib/utils';
+import Link from "next/link";
+import { rootDomain } from "@/lib/utils";
 
 export default async function HomePage() {
   return (
@@ -25,7 +24,7 @@ export default async function HomePage() {
         </div>
 
         <div className="mt-8 bg-white shadow-md rounded-lg p-6">
-          <SubdomainForm />
+          {/* <SubdomainForm /> */}
         </div>
       </div>
     </div>
