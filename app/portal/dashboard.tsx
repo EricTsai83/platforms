@@ -30,22 +30,14 @@ function DashboardHeader() {
           href={`${protocol}://${rootDomain}`}
           className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
         >
-          {rootDomain}
+          back to the home page
         </Link>
       </div>
     </div>
   );
 }
 
-function TenantGrid({
-  tenants,
-  action,
-  isPending,
-}: {
-  tenants: Tenant[];
-  action: (formData: FormData) => void;
-  isPending: boolean;
-}) {
+function TenantGrid({ tenants }: { tenants: Tenant[] }) {
   if (tenants.length === 0) {
     return (
       <Card>
@@ -63,33 +55,16 @@ function TenantGrid({
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl">{tenant.subdomain}</CardTitle>
-              <form action={action}>
-                <input
-                  type="hidden"
-                  name="subdomain"
-                  value={tenant.subdomain}
-                />
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  type="submit"
-                  disabled={isPending}
-                  className="text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-                >
-                  {isPending ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    <Trash2 className="h-5 w-5" />
-                  )}
-                </Button>
-              </form>
             </div>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
               <div className="text-4xl">{tenant.emoji}</div>
               <div className="text-sm text-gray-500">
-                Created: {new Date(tenant.createdAt).toLocaleDateString()}
+                Created:{" "}
+                {new Date(tenant.createdAt).toLocaleDateString("zh-TW", {
+                  timeZone: "Asia/Taipei",
+                })}
               </div>
             </div>
             <div className="mt-4">
@@ -110,31 +85,10 @@ function TenantGrid({
 }
 
 export function AdminDashboard({ tenants }: { tenants: Tenant[] }) {
-  const [state, action, isPending] = useActionState<DeleteState, FormData>(
-    (state, payload) => {
-      return {
-        success: "Success",
-      };
-    },
-    {},
-  );
-
   return (
     <div className="space-y-6 relative p-4 md:p-8">
       <DashboardHeader />
-      <TenantGrid tenants={tenants} action={action} isPending={isPending} />
-
-      {state.error && (
-        <div className="fixed bottom-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-md">
-          {state.error}
-        </div>
-      )}
-
-      {state.success && (
-        <div className="fixed bottom-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-md">
-          {state.success}
-        </div>
-      )}
+      <TenantGrid tenants={tenants} />
     </div>
   );
 }

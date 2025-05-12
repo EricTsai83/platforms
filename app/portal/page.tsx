@@ -12,7 +12,12 @@ export default async function AdminPage() {
   // TODO: You can add authentication here with your preferred auth provider
   const tenants = [
     {
-      subdomain: "test",
+      subdomain: "recruit",
+      emoji: "👋",
+      createdAt: 1715592000000,
+    },
+    {
+      subdomain: "coach",
       emoji: "👋",
       createdAt: 1715592000000,
     },
